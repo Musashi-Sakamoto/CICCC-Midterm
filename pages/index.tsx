@@ -1,6 +1,12 @@
 import Head from 'next/head'
 
-export default function Home() {
+import { GetStaticProps } from 'next';
+
+import apolloClient from "../graphql/apolloClient";
+import gql from 'graphql-tag';
+
+export default function Home({ pokemons }: Pokemons) {
+  console.log(pokemons)
   return (
     <div className="container">
       <Head>
@@ -206,4 +212,40 @@ export default function Home() {
       `}</style>
     </div>
   )
+}
+
+const QUERY_POKEMONS = gql`
+  query pokemons($first: Int!){
+    pokemons(first: $first){
+      id
+      number
+      name
+      image
+    }
+  }
+`
+
+interface Pokemon {
+  id: string;
+  number: string;
+  name: string;
+  image: string;
+}
+
+interface Pokemons {
+  pokemons: Pokemon[]
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const { data } = await apolloClient.query<Pokemons>({
+    query: QUERY_POKEMONS,
+    variables: {
+      first: 151
+    }
+  })
+  return {
+    props: {
+      pokemons: data.pokemons
+    }
+  }
 }
