@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import Link from "next/link"
 import Image from "next/image"
 import apolloClient from "../graphql/apolloClient";
 import gql from 'graphql-tag';
@@ -46,9 +47,11 @@ export default function Home({ pokemons }: Pokemons) {
               title={pokemon.name}
               subtitle={<span>by: {pokemon.classification}</span>}
               actionIcon={
-                <IconButton aria-label={`info about ${pokemon.name}`} className={classes.icon}>
-                  <Info />
-                </IconButton>
+                <Link href={`/${pokemon.id}/`}>
+                  <IconButton aria-label={`info about ${pokemon.name}`} className={classes.icon}>
+                    <Info />
+                  </IconButton>
+                </Link> 
               }
             />
           </GridListTile>
