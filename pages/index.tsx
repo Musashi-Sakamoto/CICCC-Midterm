@@ -1,5 +1,5 @@
 import { GetStaticProps } from 'next';
-
+import Image from "next/image"
 import apolloClient from "../graphql/apolloClient";
 import gql from 'graphql-tag';
 import { makeStyles } from '@material-ui/core/styles'
@@ -38,7 +38,7 @@ export default function Home({ pokemons }: Pokemons) {
   
         {pokemons.map((pokemon) => (
           <GridListTile key={pokemon.id}>
-            <img src={pokemon.image} alt={pokemon.image} />
+            <Image src={pokemon.image} alt={pokemon.image} width={0} height={0} layout="responsive"/>
             <GridListTileBar
               classes={{
                 root: classes.titleBar
