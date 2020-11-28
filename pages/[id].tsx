@@ -6,7 +6,7 @@ import firebase from "../src/firebase"
 import apolloClient from "../graphql/apolloClient";
 import gql from 'graphql-tag';
 import { makeStyles } from '@material-ui/core/styles'
-import { Container, Box, Typography, Grid, Chip, LinearProgress } from '@material-ui/core';
+import { Container, Box, Typography, Grid, Chip, LinearProgress, Tooltip } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,17 +76,23 @@ console.log(pokemon.maxCP / 5000)
             {pokemon.weaknesses.map((we, i) => <Chip color="secondary" key={i} label={we} />)}
             </Grid>
             <Typography variant="body1" gutterBottom>
-            fleeRate {pokemon.fleeRate}
+            fleeRate
             </Typography>
-            <LinearProgress variant="determinate" value={pokemon.fleeRate * 100} color="secondary" />
+            <Tooltip title={`fleeRate: ${pokemon.fleeRate}`} placement="top">
+              <LinearProgress variant="determinate" value={pokemon.fleeRate * 100} color="secondary" />
+            </Tooltip>
             <Typography variant="body1" gutterBottom>
             maxCP
             </Typography>
-            <LinearProgress variant="determinate" value={(pokemon.maxCP / 5000) * 100} color="secondary" />
+            <Tooltip title={`maxCP: ${pokemon.maxCP}`} placement="top">
+              <LinearProgress variant="determinate" value={(pokemon.maxCP / 5000) * 100} color="secondary" />
+            </Tooltip>
             <Typography variant="body1" gutterBottom>
             maxHP
             </Typography>
-            <LinearProgress variant="determinate" value={(pokemon.maxHP / 5000) * 100} color="secondary" />
+            <Tooltip title={`maxHP: ${pokemon.maxHP}`} placement="top">
+              <LinearProgress variant="determinate" value={(pokemon.maxHP / 5000) * 100} color="secondary" />
+            </Tooltip>
           </Grid>
         </Grid>
       </Box>
