@@ -1,9 +1,10 @@
 import { GetStaticProps } from 'next';
-
+import Link from "next/link"
+import Image from "next/image"
 import apolloClient from "../graphql/apolloClient";
 import gql from 'graphql-tag';
 import { makeStyles } from '@material-ui/core/styles'
-import { Container, Box, Typography, GridList, GridListTile, GridListTileBar, IconButton } from '@material-ui/core';
+import { Container, Box, useMediaQuery, GridList, GridListTile, GridListTileBar, IconButton } from '@material-ui/core';
 import { Info } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
@@ -27,17 +28,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home({ pokemons }: Pokemons) {
   const classes = useStyles();
+
+  const matches = useMediaQuery('(min-width:600px)');
+
   return (
     <Container>
       <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js with TypeScript example
-        </Typography>
-        <GridList cellHeight={250} className={classes.gridList} cols={4}>
+        <GridList cellHeight={250} className={classes.gridList} cols={matches ? 4: 1}>
   
         {pokemons.map((pokemon) => (
           <GridListTile key={pokemon.id}>
-            <img src={pokemon.image} alt={pokemon.image} />
+            <Image src={pokemon.image} alt={pokemon.image} width={0} height={0} layout="responsive"/>
             <GridListTileBar
               classes={{
                 root: classes.titleBar
@@ -45,9 +46,11 @@ export default function Home({ pokemons }: Pokemons) {
               title={pokemon.name}
               subtitle={<span>by: {pokemon.classification}</span>}
               actionIcon={
-                <IconButton aria-label={`info about ${pokemon.name}`} className={classes.icon}>
-                  <Info />
-                </IconButton>
+                <Link href={`/${pokemon.id}/`}>
+                  <IconButton aria-label={`info about ${pokemon.name}`} className={classes.icon}>
+                    <Info />
+                  </IconButton>
+                </Link> 
               }
             />
           </GridListTile>
