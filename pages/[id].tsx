@@ -1,8 +1,10 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
+import Image from "next/image"
+
 import apolloClient from "../graphql/apolloClient";
 import gql from 'graphql-tag';
 import { makeStyles } from '@material-ui/core/styles'
-import { Container, Box, Typography } from '@material-ui/core';
+import { Container, Box, Typography, Grid, Chip } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,10 +31,46 @@ export default function Detail({ pokemon }: PokemonProps) {
   return (
     <Container>
       <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js with TypeScript example
-        </Typography>
-        {JSON.stringify(pokemon, null, 4)}
+        <Grid container spacing={5}>
+          <Grid item xs={12} sm={6}>
+            <Image src={pokemon.image} alt={pokemon.image} width={0} height={0} layout="responsive"/>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+          <Typography variant="h5" gutterBottom>
+            No.{pokemon.number}
+          </Typography>
+          <Typography variant="h4" gutterBottom>
+            {pokemon.name}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            {pokemon.classification}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            {pokemon.weight.maximum}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            {pokemon.height.maximum}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+          Types {pokemon.types.map((type, i) => <Chip color="secondary" key={i} label={type} />)}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+          resistant {pokemon.resistant.map((res, i) => <Chip color="secondary" key={i} label={res} />)}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+          weaknesses {pokemon.weaknesses.map((we, i) => <Chip color="secondary" key={i} label={we} />)}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+          fleeRate {pokemon.fleeRate}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+          maxCP {pokemon.maxCP}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+          maxHP {pokemon.maxHP}
+          </Typography>
+          </Grid>
+        </Grid>
       </Box>
     </Container>
   )
@@ -78,6 +116,14 @@ interface Pokemon {
   name: string;
   image: string;
   classification: string;
+  weight: { minimum: string; maximum: string; }
+  height: { minimum: string; maximum: string; }
+  types: string[];
+  resistant: string[];
+  weaknesses: string[];
+  fleeRate: number;
+  maxCP: number;
+  maxHP: number;
 }
 
 interface Pokemons {
