@@ -1,6 +1,8 @@
+import { useEffect } from "react"
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Image from "next/image"
 
+import firebase from "../src/firebase"
 import apolloClient from "../graphql/apolloClient";
 import gql from 'graphql-tag';
 import { makeStyles } from '@material-ui/core/styles'
@@ -27,6 +29,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Detail({ pokemon }: PokemonProps) {
   const classes = useStyles();
+
+  useEffect(() => {
+    firebase.analytics().logEvent(pokemon.name)
+  }, [])
+
   return (
     <Container>
       <Box my={4}>
