@@ -6,6 +6,7 @@ import theme from '../src/theme';
 import { AppProps } from 'next/app';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
+import Layout from '../src/components/Layout';
 
 const client = new ApolloClient({
   uri: 'https://countries-274616.ew.r.appspot.com',
@@ -33,7 +34,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
       <CssBaseline />
+      <Layout>
       <Component {...pageProps} />
+
+      </Layout>
     </ApolloProvider>
 
     </ThemeProvider>
