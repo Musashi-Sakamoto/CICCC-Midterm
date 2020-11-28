@@ -6,7 +6,7 @@ import firebase from "../src/firebase"
 import apolloClient from "../graphql/apolloClient";
 import gql from 'graphql-tag';
 import { makeStyles } from '@material-ui/core/styles'
-import { Container, Box, Typography, Grid, Chip } from '@material-ui/core';
+import { Container, Box, Typography, Grid, Chip, LinearProgress } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +33,7 @@ export default function Detail({ pokemon }: PokemonProps) {
   useEffect(() => {
     firebase.analytics().logEvent(pokemon.name)
   }, [])
-
+console.log(pokemon.maxCP / 5000)
   return (
     <Container>
       <Box my={4}>
@@ -58,23 +58,35 @@ export default function Detail({ pokemon }: PokemonProps) {
               {pokemon.height.maximum}
             </Typography>
             <Typography variant="body1" gutterBottom>
-            Types {pokemon.types.map((type, i) => <Chip color="secondary" key={i} label={type} />)}
+            Types
             </Typography>
+            <Grid item container justify="flex-start" alignItems="center">
+            {pokemon.types.map((type, i) => <Chip variant="outlined" color="secondary" key={i} label={type} />)}
+            </Grid>
             <Typography variant="body1" gutterBottom>
-            resistant {pokemon.resistant.map((res, i) => <Chip color="secondary" key={i} label={res} />)}
+            resistant
             </Typography>
+            <Grid item container justify="flex-start" alignItems="center">
+            {pokemon.resistant.map((res, i) => <Chip color="primary" key={i} label={res} />)}
+            </Grid>
             <Typography variant="body1" gutterBottom>
-            weaknesses {pokemon.weaknesses.map((we, i) => <Chip color="secondary" key={i} label={we} />)}
+            weaknesses
             </Typography>
+            <Grid item container justify="flex-start" alignItems="center">
+            {pokemon.weaknesses.map((we, i) => <Chip color="secondary" key={i} label={we} />)}
+            </Grid>
             <Typography variant="body1" gutterBottom>
             fleeRate {pokemon.fleeRate}
             </Typography>
+            <LinearProgress variant="determinate" value={pokemon.fleeRate * 100} color="secondary" />
             <Typography variant="body1" gutterBottom>
-            maxCP {pokemon.maxCP}
+            maxCP
             </Typography>
+            <LinearProgress variant="determinate" value={(pokemon.maxCP / 5000) * 100} color="secondary" />
             <Typography variant="body1" gutterBottom>
-            maxHP {pokemon.maxHP}
+            maxHP
             </Typography>
+            <LinearProgress variant="determinate" value={(pokemon.maxHP / 5000) * 100} color="secondary" />
           </Grid>
         </Grid>
       </Box>
