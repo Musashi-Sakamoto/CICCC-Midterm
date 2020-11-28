@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Detail({ pokemon }: PokemonProps) {
   const classes = useStyles();
-  console.log(pokemon)
   return (
     <Container>
       <Box my={4}>

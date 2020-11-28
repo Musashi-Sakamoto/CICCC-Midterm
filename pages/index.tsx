@@ -28,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home({ pokemons }: Pokemons) {
   const classes = useStyles();
+
   const matches = useMediaQuery('(min-width:600px)');
 
-  console.log(pokemons)
   return (
     <Container>
       <Box my={4}>
