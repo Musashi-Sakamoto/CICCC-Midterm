@@ -2,14 +2,10 @@ import firebase from "firebase"
 import "firebase/analytics"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA3B5YKwss-AoIowlGKuFAQ331hrxIhC_4",
-  authDomain: "fir-ca25f.firebaseapp.com",
-  databaseURL: "https://fir-ca25f.firebaseio.com",
-  projectId: "fir-ca25f",
-  storageBucket: "fir-ca25f.appspot.com",
-  messagingSenderId: "1007831352521",
-  appId: "1:1007831352521:web:d6a219ecfdb652b698f918",
-  measurementId: "G-6J9YTHCMLF"
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID
 };
 // Initialize Firebase
 if (typeof window !== 'undefined' && !firebase.apps.length) {
