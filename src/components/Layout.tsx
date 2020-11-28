@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 
@@ -24,9 +25,11 @@ const Layout = ({ children }) => {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title} color="secondary">
-            Pokedex
-          </Typography>
+          <Link href="/">
+            <Typography variant="h6" className={classes.title} color="secondary">
+              Pokedex
+            </Typography>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
