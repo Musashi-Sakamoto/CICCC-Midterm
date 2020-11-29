@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "storybook": "start-storybook -p 6006",
+    "build:storybook": "build-storybook -o build/storybook"
   },
   "dependencies": {
     "@apollo/client": "^3.2.9",
@@ -16,9 +18,19 @@
     "graphql-tag": "^2.11.0",
     "next": "10.0.3",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "storybook-addon-next-router": "^2.0.0"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^6.1.8",
+    "@storybook/addon-actions": "^6.1.8",
+    "@storybook/addon-docs": "^6.1.8",
+    "@storybook/addon-knobs": "^6.1.8",
+    "@storybook/addon-links": "^6.1.8",
+    "@storybook/addon-storyshots": "^6.1.8",
+    "@storybook/addon-viewport": "^6.1.8",
+    "@storybook/addons": "^6.1.8",
+    "@storybook/react": "^6.1.8",
     "@types/node": "^14.14.10",
     "@types/react": "^17.0.0",
     "typescript": "^4.1.2"
