@@ -1,5 +1,6 @@
 import { Typography, Grid, Chip } from '@material-ui/core';
 import BreadCrumbs from "./BreadCrumbs";
+import Chips from './Chips';
 import LinearProgress from "./LinearProgress"
 export default function Detail({ pokemon }: PokemonProps) {
 
@@ -21,24 +22,9 @@ export default function Detail({ pokemon }: PokemonProps) {
       <Typography variant="h6" gutterBottom>
         {pokemon.height.maximum}
       </Typography>
-      <Typography variant="body1" gutterBottom>
-      Types
-      </Typography>
-      <Grid item container justify="flex-start" alignItems="center">
-      {pokemon.types.map((type, i) => <Chip variant="outlined" color="secondary" key={i} label={type} />)}
-      </Grid>
-      <Typography variant="body1" gutterBottom>
-      resistant
-      </Typography>
-      <Grid item container justify="flex-start" alignItems="center">
-      {pokemon.resistant.map((res, i) => <Chip color="primary" key={i} label={res} />)}
-      </Grid>
-      <Typography variant="body1" gutterBottom>
-      weaknesses
-      </Typography>
-      <Grid item container justify="flex-start" alignItems="center">
-      {pokemon.weaknesses.map((we, i) => <Chip color="secondary" key={i} label={we} />)}
-      </Grid>
+      <Chips title="types" values={pokemon.types} />
+      <Chips title="resistant" values={pokemon.resistant} />
+      <Chips title="weakness" values={pokemon.weaknesses} />
       <LinearProgress title="fleetRate" value={pokemon.fleeRate} />
       <LinearProgress title="maxCP" value={pokemon.maxCP} />
       <LinearProgress title="maxHP" value={pokemon.maxHP} />
