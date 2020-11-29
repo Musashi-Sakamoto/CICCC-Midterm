@@ -5,35 +5,15 @@ import Image from "next/image"
 import firebase from "../src/firebase"
 import apolloClient from "../graphql/apolloClient";
 import gql from 'graphql-tag';
-import { makeStyles } from '@material-ui/core/styles'
-import { Container, Box, Typography, Grid, Chip, LinearProgress, Tooltip } from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
-  },
-  gridList: {
-  },
-  icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
-  },
-  titleBar: {
-    background:
-      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-  },
-}));
+import { Container, Box, Grid } from '@material-ui/core';
+import Details, { Pokemon, PokemonProps } from "../src/components/Detail";
 
 export default function Detail({ pokemon }: PokemonProps) {
-  const classes = useStyles();
 
   useEffect(() => {
     firebase.analytics().logEvent(pokemon.name)
   }, [])
-console.log(pokemon.maxCP / 5000)
+
   return (
     <Container>
       <Box my={4}>
@@ -42,57 +22,7 @@ console.log(pokemon.maxCP / 5000)
             <Image src={pokemon.image} alt={pokemon.image} width={0} height={0} layout="responsive"/>
           </Grid>
           <Grid item container xs={12} sm={6} direction="column" justify="center">
-            <Typography variant="h5" gutterBottom>
-              No.{pokemon.number}
-            </Typography>
-            <Typography variant="h4" gutterBottom>
-              {pokemon.name}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              {pokemon.classification}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              {pokemon.weight.maximum}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
-              {pokemon.height.maximum}
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-            Types
-            </Typography>
-            <Grid item container justify="flex-start" alignItems="center">
-            {pokemon.types.map((type, i) => <Chip variant="outlined" color="secondary" key={i} label={type} />)}
-            </Grid>
-            <Typography variant="body1" gutterBottom>
-            resistant
-            </Typography>
-            <Grid item container justify="flex-start" alignItems="center">
-            {pokemon.resistant.map((res, i) => <Chip color="primary" key={i} label={res} />)}
-            </Grid>
-            <Typography variant="body1" gutterBottom>
-            weaknesses
-            </Typography>
-            <Grid item container justify="flex-start" alignItems="center">
-            {pokemon.weaknesses.map((we, i) => <Chip color="secondary" key={i} label={we} />)}
-            </Grid>
-            <Typography variant="body1" gutterBottom>
-            fleeRate
-            </Typography>
-            <Tooltip title={`fleeRate: ${pokemon.fleeRate}`} placement="top">
-              <LinearProgress variant="determinate" value={pokemon.fleeRate * 100} color="secondary" />
-            </Tooltip>
-            <Typography variant="body1" gutterBottom>
-            maxCP
-            </Typography>
-            <Tooltip title={`maxCP: ${pokemon.maxCP}`} placement="top">
-              <LinearProgress variant="determinate" value={(pokemon.maxCP / 5000) * 100} color="secondary" />
-            </Tooltip>
-            <Typography variant="body1" gutterBottom>
-            maxHP
-            </Typography>
-            <Tooltip title={`maxHP: ${pokemon.maxHP}`} placement="top">
-              <LinearProgress variant="determinate" value={(pokemon.maxHP / 5000) * 100} color="secondary" />
-            </Tooltip>
+            <Details pokemon={pokemon} />
           </Grid>
         </Grid>
       </Box>
@@ -134,27 +64,9 @@ const QUERY_POKEMON = gql`
 }
 `
 
-interface Pokemon {
-  id: string;
-  number: string;
-  name: string;
-  image: string;
-  classification: string;
-  weight: { minimum: string; maximum: string; }
-  height: { minimum: string; maximum: string; }
-  types: string[];
-  resistant: string[];
-  weaknesses: string[];
-  fleeRate: number;
-  maxCP: number;
-  maxHP: number;
-}
-
 interface Pokemons {
   pokemons: Pokemon[]
 }
-
-type PokemonProps = Record<"pokemon", Pokemon>
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await apolloClient.query<Pokemons>({
