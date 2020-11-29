@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme) => ({
     background:
       'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
+  image: {
+    transition: 'transform .2s',
+    '&:hover': {
+      transform: 'scale(1.2)'
+    }
+  }
 }));
 
 export type PokemonForGrid = Pick<Pokemon, "image" | "name" | "id" | "classification">[]
@@ -30,7 +36,7 @@ export default function GridListComponent({ pokemons }: IProps) {
   
         {pokemons.map((pokemon) => (
           <GridListTile key={pokemon.id}>
-            <Image src={pokemon.image} alt={pokemon.image} width={250} height={250} layout="responsive"/>
+            <Image className={classes.image} src={pokemon.image} alt={pokemon.image} width={250} height={250} layout="responsive"/>
             <GridListTileBar
               classes={{
                 root: classes.titleBar
